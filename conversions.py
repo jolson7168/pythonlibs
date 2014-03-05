@@ -1,10 +1,10 @@
 import exceptions
 
-def toNum (s):
+def toNum (s, default):
     try:
         return int(s)
     except exceptions.ValueError:
 	try:
         	return float(s)
 	except exceptions.ValueError:
-		return float(config["noVal"])
+		return float(default)
