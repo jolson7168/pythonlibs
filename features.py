@@ -280,8 +280,11 @@ def setFeature(part, feature, value, filename=None, doIgnore=False, isOverride=F
 						part["files"][filename]["contents"][feature] = {}
 						part["files"][filename]["contents"][feature]["featureType"] = featureType
 						part["files"][filename]["contents"][feature]["valueList"] = []
-						if isOverride:
-							part["files"][filename]["contents"][feature]["override"] = True
+						if isOverride: #fix overrides on part level (filename = None)
+							if (filename == None):
+								part[feature]["override"] = True
+							else:
+								part["files"][filename]["contents"][feature]["override"] = True
 						addFeatureValue(part, feature,value,isOverride,filename=filename)
 			else:
 				print("Filename: "+filename+ " does not exist in part")
@@ -299,7 +302,10 @@ def setFeature(part, feature, value, filename=None, doIgnore=False, isOverride=F
 				part[feature]["featureType"] = featureType
 				part[feature]["valueList"] = []
 				if isOverride:
-					part["files"][filename]["contents"][feature]["override"] = True
+					if (filename == None):
+						part[feature]["override"]= True						
+					else:
+						part["files"][filename]["contents"][feature]["override"] = True
 				addFeatureValue(part, feature,value, isOverride)
 #	else:
 #		s={"addType":"ignored","featureType":featureList[feature]["type"],"feature":feature,"new":value}
